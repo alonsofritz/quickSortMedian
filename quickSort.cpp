@@ -155,4 +155,7 @@ int main() {
     csvFile << "\n";
 
   }
+
+  cout << "Execução Finalizada com Sucesso !!" << endl;
+
 }
