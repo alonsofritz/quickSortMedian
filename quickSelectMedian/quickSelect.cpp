@@ -33,7 +33,6 @@ int partition(vector<int> & data, int left_ordered_index, int last_array_index) 
 
 int get_k_smallest(vector<int> & data, int left_ordered_index, int last_array_index, int k) {
 
-    // Confere o espaco de busca
     if(k > 0 and k <= (last_array_index - left_ordered_index + 1)) {
 
         int position = partition(data, left_ordered_index, last_array_index);
@@ -75,10 +74,9 @@ float getMedian (vector<int> & data) {
 }
 
 bool getFileContent (string fileName, vector<int> & data) {
-    // Open the File
+
     ifstream in(fileName);
 
-    // Check if object is valid
     if(!in.is_open()) {
         cerr << "Cannot open the File : "<< fileName << endl;
         return false;
@@ -86,12 +84,11 @@ bool getFileContent (string fileName, vector<int> & data) {
 
     int num;
 
-    // Read the next line from File untill it reaches the end.
     while (in >> num)
     {
         data.push_back(num);
     }
-    //Close The File
+
     in.close();
 
     return true;
@@ -102,29 +99,24 @@ int main() {
   ofstream csvFile;
   csvFile.open ("resultsQuickSelect.csv");
 
-  const int numTests = 1;
-  const string path = "./baseTests";
+  const int numTests = 5;
+  const string path = "./entry";
 
-  // Retorna o PATH de todos os Files para Teste: Para cada entrada, deve-se rodar o programa X vezes
     for (const auto & entry : fs::directory_iterator(path)) {
 
     csvFile << (entry.path().string()).substr(path.length() + 1) << ", ";
     float median = 0;
 
     for (int countState = 0; countState < numTests; countState++) {
-        // Vetor que recera o Arquivo para ordenar
+
         vector<int> data;
-        // Carrega arquivo no Vetor
         getFileContent(entry.path().string(), data);
-        // define tamanho do vetor
         int dataSize = data.size();
         
-        // perform median: procura pela media do vetor ordenado
         auto start = std::chrono::high_resolution_clock::now();
         median = getMedian(data);
         auto end = std::chrono::high_resolution_clock::now();
 
-        //Anota o tempo de execucao, precisamos colocar num CSV
         std::chrono::duration<double, std::milli> float_ms = end - start;
 
         csvFile << float_ms.count() << ", ";
@@ -135,6 +127,6 @@ int main() {
 
     }
 
-    cout << "Execução Finalizada com Sucesso !!" << endl;
+    cout << "Execution Completed Successfully!!" << endl;
 
 }
